@@ -36,11 +36,6 @@ function gaussElim(A,B = nothing)
 
 			if A[row,column] != 0
 				A[row,:] /= A[row,column]
-			#elseif sum(A[row,:]) != 0
-			#	while A[row,column] == 0
-			#		column += 1
-			#	end
-			#	A[row,:] /= A[row,column]
 			end
 
 			# Zeroing out columns
