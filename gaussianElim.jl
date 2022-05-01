@@ -1,12 +1,18 @@
 # Function that uses gaussian elimination to simplify matrices, all inputs must be in the form of a numerical matrix(A).
-function gaussElim(A)
+using LinearAlgebra
+function gaussElim(A,B = nothing)
 
 	# Parameters
 	rows, columns = size(A)
 	if typeof(A) == Matrix{Int}
 		A = A//1
 	else
-		A = convert(Matrix{Float64}, A)
+		A = A/1
+	end
+
+	if isnothing(B) == false
+		A = hcat(A,B)
+		invRows, invCols = size(A)
 	end
 
 	# Loop that should ideally swap rows as needed, then reduce pivots to one, then eliminate all other non-zero numbers in the column.
@@ -51,8 +57,8 @@ function gaussElim(A)
 		A = convert(Matrix{Int}, A)
 	else
 		A = convert(Matrix{Any}, A)
-		for row = 1:rows
-			for column = 1:columns
+		for row = 1:invRows
+			for column = 1:invCols
 				if typeof(A[row,column]) == Rational{Int} && mod(numerator(A[row,column]), denominator(A[row,column])) == 0
 					A[row,column] = convert(Int, A[row,column])
 				end
@@ -60,5 +66,9 @@ function gaussElim(A)
 		end
 	end
 
-	return A
+	if isnothing(B) == false && B == I
+		return A[:,rows+1:end]
+	else
+		return A
+	end
 end
