@@ -13,6 +13,8 @@ function gaussElim(A,B = nothing)
 	if isnothing(B) == false
 		A = hcat(A,B)
 		invRows, invCols = size(A)
+	else
+		invRows, invCols = rows, columns
 	end
 
 	# Loop that should ideally swap rows as needed, then reduce pivots to one, then eliminate all other non-zero numbers in the column.
